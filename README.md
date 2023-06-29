@@ -10,5 +10,5 @@ Atualmente, os assets e texturas estão presentes apenas para cumprir o papel de
 
 # Instalação
 
--Primeiramente é necessário o download da última versão do Love2D no site oficial.
--Depois, basta arrastar o diretório com o conteúdo do repositório sobre love.exe e o projeto será iniciado. 
+- Primeiramente é necessário o download da última versão do Love2D no site oficial.
+- Depois, basta arrastar o diretório com o conteúdo do repositório sobre `love.exe` e o projeto será iniciado. 

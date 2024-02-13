@@ -16,7 +16,7 @@ Player.TYPE = "DynamicEntity"
 Player.NAME = "Player"
 
 --Properties
-Player.FOV = PI/3 --RAD
+Player.FOV = PI / 3 --RAD
 Player.WALK_SPEED = 128
 Player.SPRINT_SPEED = 160
 Player.painSound = love.audio.newSource("assets/audio/player/audio/pain.wav","static")

@@ -6,33 +6,42 @@ Render = {}
 
 Render.camera = nil
 
-function Render:getWallsInfo(camera) 
+function Render:getWallsInfo(camera)
+    --CORRETO
     local column = math.ceil(camera.x/TILE_SIZE)
     local line = math.ceil(camera.y/TILE_SIZE)
 
-    local rayRad
+    local rayRad    --Armazena cada um dos raios
     local playerRad = getRad(camera.angle)
-    local positivePlayerRad = getPositiveRad(getRad(camera.angle))
+    local positivePlayerRad = getPositiveRad(playerRad)
 
     local column_position_x = 0
     
     local endPoints = {}
     --Para cada raio
+    --REVISAR camera.FOV/Screen.width
     for rayRad = playerRad - camera.FOV/2, playerRad + camera.FOV/2, camera.FOV/Screen.width do
         local positiveRayRad = getPositiveRad(rayRad)
         
+        --Endpoints
         local epX_v = 0
         local epY_v = 0
+
         local isWall = false
+
+        --Conta o número de células atravessadas
         local counter = 0
+
         local incrementX = 1
         local tile
         local hitAxis
         --Para cada linha vertical cruzada pelo raio
+        --Checa se o raio ainda está dentro do mapa
         while not isWall and
             epX_v < TILE_SIZE * Level.xSize and
             epX_v >= 0 and epY_v < TILE_SIZE * Level.ySize(Level) and
             epY_v >= 0 do
+            --Armazena a posição x do ponto final do raio
             if positiveRayRad <= PI/2 or positiveRayRad >= 3 * PI/2 then
                 epX_v = (column + counter) * TILE_SIZE
             else
@@ -41,14 +50,18 @@ function Render:getWallsInfo(camera)
             end
 
             --MULTIPLICAÇÃO: direção * distância X
+            --CORRETO
             epY_v = camera.y + math.tan(rayRad) * (epX_v - camera.x)
 
+            --CORRETO pois epX sempre é um inteiro e múltiplo de TILE_SIZE
             tileX = epX_v/TILE_SIZE + incrementX
+            --CORRETO
             tileY = math.floor(epY_v/TILE_SIZE)
 
             counter = counter + 1
             tile = tileY * Level.xSize + tileX
 
+            --Se for parede, registre
             if not (Level.map[tile] == 0) and not (Level.map[tile] == nil) then
                 isWall = true
                 valueV = Level.map[tile]
@@ -107,6 +120,7 @@ function Render:getWallsInfo(camera)
         local cosValue = math.abs(math.cos(relativeRayRad))
 
         --Distância entre o ponto final do raio (parede) e o plano (linha) da tela
+        --CORRETO
         local v_distance = getPointsDistance(epX_v, epY_v, camera.x, camera.y) * cosValue
         local h_distance = getPointsDistance(epX_h, epY_h, camera.x, camera.y) * cosValue
 
@@ -213,7 +227,7 @@ function Render:draw(spriteObjects)
             end
         else
             decrement = 0
-            column_height = clamp(0, (TILE_SIZE/v.distance) * (Screen.width/2) / math.tan(Player:getFOV()/2), Screen.height + 100000)
+            column_height = clamp(0, (TILE_SIZE/v.distance) * (Screen.width/2) / math.tan(Player:getFOV() / 2), Screen.height + 100000)
             column_position_y = (Screen.height-column_height + Player:getAltitude())/2
             
             if v.hitAxis == 'x' then

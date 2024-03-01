@@ -27,6 +27,12 @@ function CollisionHandler:checkBoxCollision()
         local xCollision = (colX <= (entTileX - 1) * TILE_SIZE) and not(Level.map[cTile - 1] == 0) or (colX + colWidth) >= entTileX * TILE_SIZE and not(Level.map[cTile + 1] == 0)
         local yCollision = (colY <= (entTileY - 1) * TILE_SIZE) and not(Level.map[cTile - Level.xSize] == 0) or (colY + colHeight >= (entTileY) * TILE_SIZE) and not(Level.map[cTile + Level.xSize] == 0)
 
+        if not (Level.map[cTile] == 0) then
+            collider.onCollision = true
+            entity:setPosition({x = entX - entDeltaX, y = entY - entDeltaY})
+            return
+        end
+
         --X-axis Collision
         if xCollision then
             collider.onCollision = true

@@ -120,7 +120,7 @@ function love.load()
 
     numberOfEnemies = table.getn(enemies)
     Level.enemyCounter = numberOfEnemies
-    love.audio.play(Level.music)
+    --love.audio.play(Level.music)
 end
 
 function love.keyreleased(k)
@@ -243,6 +243,16 @@ function love.draw()
         HUD:drawDeathScreen()
     end
 
+    local collisionMessage = "No Collision"
+
+    if Player.collider.onCollision then
+        collisionMessage = "OnCollision"
+    end
+
+    love.graphics.print(love.timer.getFPS(), 0, 0)
+    love.graphics.print(Player.angle, 0, 40)
+    love.graphics.print(collisionMessage, 0, 80)
+
 end
 
 function restart()
@@ -261,6 +271,6 @@ end
 
 function win()
     if Level.enemyCounter == 0 then
-        Level.win = true
+        --Level.win = true
     end
 end

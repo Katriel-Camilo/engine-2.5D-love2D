@@ -116,7 +116,7 @@ function Render:getWallsInfo(camera)
             relativeRayRad = camera.FOV
         end
 
-        --Ajuste do efeito de olho de peixe
+        --Correção olho de peixe
         local cosValue = math.abs(math.cos(relativeRayRad))
 
         --Distância entre o ponto final do raio (parede) e o plano (linha) da tela
@@ -203,6 +203,8 @@ function Render:draw(spriteObjects)
     local spriteImg
     local realSpriteHeight
 
+    local hToScreen = (Screen.width / 2) / math.tan(Player.FOV / 2)
+
     local dont_render = false
     for _, v in pairs(renderInfo) do
         if(v.renderType == "sprite") then
@@ -227,9 +229,9 @@ function Render:draw(spriteObjects)
             end
         else
             decrement = 0
-            column_height = clamp(0, (TILE_SIZE/v.distance) * (Screen.width/2) / math.tan(Player:getFOV() / 2), Screen.height + 100000)
-            column_position_y = (Screen.height-column_height + Player:getAltitude())/2
-            
+            local deltaSToScreen = hToScreen / math.cos(math.abs(v.rad - getRad(Player.angle)))         
+            column_height = clamp(0, hToScreen * TILE_SIZE / v.distance, Screen.height + 10000)
+            column_position_y = (Screen.height - column_height + Player:getAltitude())/2
             if v.hitAxis == 'x' then
                 love.graphics.setColor(1 - v.distance * 5e-4,1 - v.distance * 5e-4, 1 - v.distance * 5e-4)
                 if v.rad < PI then decrement = -1 end

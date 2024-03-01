@@ -101,7 +101,7 @@ function love.load()
 
     generateWorld(Level)
 
-    enemies = {}
+    enemies = {BeastMan:new(75), BeastMan:new(84), BeastMan:new(243), BeastMan:new(160),  BeastMan:new(407),BeastMan:new(377),BeastMan:new(208),BeastMan:new(414),BeastMan:new(355), SharpShooter:new(289), SharpShooter:new(290),SharpShooter:new(205), SharpShooter:new(419), SharpShooter:new(254), BeastMan:new(56), SharpShooter:new(115), SharpShooter:new(475), SharpShooter:new(471), SharpShooter:new(535), SharpShooter:new(713), BeastMan:new(629), BeastMan:new(477), BeastMan:new(592), BeastMan:new(716), BeastMan:new(528), BeastMan:new(432), BeastMan:new(492), BeastMan:new(582),  BeastMan:new(35), SharpShooter:new(409),}
     bonuses = {HealthBonus:new(350 , 85), HealthBonus:new(1030 , 350), HealthBonus:new(1487 , 302), HealthBonus:new(1502 , 69), HealthBonus:new(1116 , 1503), HealthBonus:new(267 , 903), HealthBonus:new(268 , 973), HealthBonus:new(270 , 1047)}
 
     sprites = ObjectsHandler:getByType("SpriteObject")
